@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notifications | ResourceLoop</title>
+  <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+  <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+</head>
+<body>
+  {% include 'includes/navbar.html' %}
+  <main class="rl-notifications-page">
+    <div class="rl-notifications-heading">
+      <div><h1>Notifications</h1><p>See new community resource requests and replies to your requests.</p></div>
+      <form method="post" action="{% url 'mark_all_notifications_read' %}">
+        {% csrf_token %}<button class="rl-button rl-outline" type="submit">Mark all as read</button>
+      </form>
+    </div>
+    {% for item in page_obj %}
+      <article class="rl-notification-item {% if not item.is_read %}rl-unread{% endif %}">
+        <div>
+          {% if not item.is_read %}<span class="rl-new-label">New</span>{% endif %}
+          <h2>{{ item.title }}</h2>
+          <p>From {{ item.actor.full_name }} · {{ item.created_at|date:"d M Y, g:i A" }}</p>
+        </div>
+        <form method="post" action="{% url 'open_notification' item.pk %}">
+          {% csrf_token %}<button class="rl-button" type="submit">View request</button>
+        </form>
+      </article>
+    {% empty %}
+      <div class="rl-no-notifications">No notifications yet. New requests will appear here.</div>
+    {% endfor %}
+    {% if page_obj.has_other_pages %}
+      <nav class="rl-notification-pagination" aria-label="Notification pages">
+        {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">← Previous</a>{% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next →</a>{% endif %}
+      </nav>
+    {% endif %}
+  </main>
+</body>
+</html>

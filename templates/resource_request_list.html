@@ -1,0 +1,8 @@
+{% load static %}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Resource Requests</title><link rel="stylesheet" href="{% static 'css/product_requests.css' %}">    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+<body>{% include 'includes/navbar.html' %}
+<main class="container"><div class="page-header"><div><h1>My Resource Requests</h1><p>Create, view, edit and delete requests for resources you need.</p></div><a class="browse-btn" href="{% url 'create_request' %}">+ New Request</a></div>
+{% for message in messages %}<div class="alert">{{ message }}</div>{% endfor %}
+<div class="request-grid">{% for item in items %}<article class="request-card"><div class="product-info"><h3>{{ item.title }}</h3><p>{{ item.get_category_display }}{% if item.course_code %} · {{ item.course_code }}{% endif %}</p></div><div class="message-box">{{ item.description|linebreaksbr }}</div><p>{{ item.created_at|date:'d M Y' }}</p><div class="action-row"><a class="btn accept" href="{% url 'edit_resource_request' item.id %}">Edit</a><form method="post" action="{% url 'delete_resource_request' item.id %}">{% csrf_token %}<button class="btn reject" type="submit">Delete</button></form></div></article>{% empty %}<div class="empty-state"><h2>No resource requests yet</h2><a class="browse-btn" href="{% url 'create_request' %}">Create Request</a></div>{% endfor %}</div>
+</main></body></html>

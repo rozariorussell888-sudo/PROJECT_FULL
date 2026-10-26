@@ -1,0 +1,191 @@
+
+{% load static %}
+{% load contact_links %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Requests | Resource Loop</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/product_requests.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+
+<body>
+
+{% include 'includes/navbar.html' %}
+
+<main class="container">
+
+    <div class="page-header">
+        <div>
+            <h1>My Requests</h1>
+            <p>Track requests you have sent to other students.</p>
+        </div>
+
+        <span class="count">
+            {{ sent_requests|length }} Requests
+        </span>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="request-grid">
+
+        {% for product_request in sent_requests %}
+
+            <article class="request-card">
+
+                <div class="card-top">
+
+                    {% if product_request.resource.image %}
+                        <img
+                            src="{{ product_request.resource.image.url }}"
+                            class="product-image"
+                            alt="{{ product_request.resource.title }}">
+                    {% else %}
+                        <div class="placeholder">📚</div>
+                    {% endif %}
+
+                    <div class="product-info">
+
+                        <h3>
+                            <a href="{% url 'resource_detail' product_request.resource.id %}">
+                                {{ product_request.resource.title }}
+                            </a>
+                        </h3>
+
+                        <p>
+                            {{ product_request.resource.get_category_display }}
+                            •
+                            {{ product_request.resource.get_share_type_display }}
+                        </p>
+
+                        <span class="status {{ product_request.status }}">
+                            {{ product_request.get_status_display }}
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="requester-info">
+
+                    <p>
+                        <strong>Owner:</strong>
+                        {{ product_request.resource.student.full_name }}
+                    </p>
+
+                    <p>
+                        <strong>Request Date:</strong>
+                        {{ product_request.created_at|date:"d M Y, h:i A" }}
+                    </p>
+
+                    <p>
+                        <strong>Type:</strong>
+                        {{ product_request.resource.get_share_type_display }}
+                    </p>
+
+                    {% if product_request.resource.price %}
+                        <p>
+                            <strong>Price:</strong>
+                            ৳{{ product_request.resource.price }}
+                        </p>
+                    {% endif %}
+
+                </div>
+
+                {% if product_request.status == "pending" %}
+
+                    <div class="notice">
+                        Waiting for the owner's response.
+                    </div>
+
+                    <form
+                        method="POST"
+                        action="{% url 'cancel_product_request' product_request.id %}">
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="btn reject">
+                            Cancel Request
+                        </button>
+
+                    </form>
+
+                {% elif product_request.status == "accepted" %}
+
+                    <div class="notice accepted-notice">
+                        ✓ Your request has been accepted.
+                        You can contact the owner to arrange
+                        the exchange.
+                    </div>
+                    {% if product_request.resource.student.phone %}
+                    <div class="requester-info"><strong>Owner phone:</strong> {{ product_request.resource.student.phone }}
+                      <div class="action-row"><a class="btn accept" href="tel:{{ product_request.resource.student.phone }}">Call</a><a class="btn accept" target="_blank" rel="noopener noreferrer" href="https://wa.me/{{ product_request.resource.student.phone|whatsapp_phone }}">WhatsApp</a></div>
+                    </div>
+                    {% endif %}
+
+                {% elif product_request.status == "rejected" %}
+
+                    <div class="notice rejected-notice">
+                        Your request was rejected.
+                    </div>
+
+                {% else %}
+
+                    <div class="notice">
+                        You cancelled this request.
+                    </div>
+
+                {% endif %}
+
+            </article>
+
+        {% empty %}
+
+            <div class="empty-state">
+                <div class="empty-icon">📄</div>
+                <h2>No Requests Sent</h2>
+                <p>
+                    Browse resources and send your first request.
+                </p>
+
+                <a href="{% url 'resources' %}"
+                   class="browse-btn">
+                    Browse Resources
+                </a>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+<div class="page-header"><div><h2>My Community Resource Requests</h2><p>Other students can respond if they have the resource you need.</p></div><a class="browse-btn" href="{% url 'create_request' %}">+ New Resource Request</a></div>
+<div class="request-grid">
+{% for wanted in community_requests %}
+<article class="request-card"><div class="product-info"><h3>{{ wanted.title }}</h3><p>{{ wanted.get_category_display }}{% if wanted.course_code %} · {{ wanted.course_code }}{% endif %}</p></div><div class="message-box">{{ wanted.description|linebreaksbr }}</div>
+{% for response in wanted.responses.all %}
+<div class="requester-info"><p><strong>{{ response.student.full_name }}</strong> — <span class="status {{ response.status }}">{{ response.get_status_display }}</span></p>
+{% if response.status == 'accepted' %}
+  {% if response.student.phone %}
+  <p><strong>Phone:</strong> {{ response.student.phone }}</p><div class="action-row"><a class="btn accept" href="tel:{{ response.student.phone }}">Call</a><a class="btn accept" target="_blank" rel="noopener noreferrer" href="https://wa.me/{{ response.student.phone|whatsapp_phone }}">WhatsApp</a></div>
+  {% else %}<p>Contact number not available.</p>{% endif %}
+{% endif %}</div>
+{% empty %}<p class="notice">Waiting for other students to respond.</p>{% endfor %}
+<div class="action-row"><a class="btn accept" href="{% url 'edit_resource_request' wanted.id %}">Edit</a><form method="post" action="{% url 'delete_resource_request' wanted.id %}">{% csrf_token %}<button class="btn reject" type="submit">Delete</button></form></div>
+</article>
+{% empty %}<div class="empty-state"><h2>No community requests created</h2></div>{% endfor %}
+</div>
+</main>
+
+</body>
+</html>
