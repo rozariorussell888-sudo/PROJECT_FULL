@@ -3,9 +3,5 @@ venv/
 __pycache__/
 *.pyc
 .env
-db.sqlite3
-media/
 .idea/
 staticfiles/
-db.sqlite3
-media/
