@@ -1,0 +1,34 @@
+{% load static %}
+<header class="rl-header">
+  <div class="rl-header-inner">
+    <a class="rl-brand" href="{% url 'home' %}"><span class="rl-brand-symbol">↗</span><span>Resource<span class="rl-brand-highlight">Loop</span></span></a>
+    <nav class="rl-nav" aria-label="Main navigation">
+      <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}rl-current{% endif %}">Home</a>
+      <a href="{% url 'resources' %}" class="{% if request.resolver_match.url_name == 'resources' or request.resolver_match.url_name == 'resource_detail' %}rl-current{% endif %}">Resources</a>
+      <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}rl-current{% endif %}">About</a>
+    </nav>
+    <a href="{% url 'notifications' %}" class="rl-notification-link {% if request.resolver_match.url_name == 'notifications' %}rl-current{% endif %}" aria-label="Notifications{% if navbar_unread_notifications %}: {{ navbar_unread_notifications }} unread{% endif %}">
+      <span aria-hidden="true">🔔</span> Notifications
+      {% if navbar_unread_notifications %}<strong class="rl-notification-count">{{ navbar_unread_notifications }}</strong>{% endif %}
+    </a>
+    <details class="rl-profile-menu">
+      <summary class="rl-profile-trigger" aria-label="Open account menu">
+        <span class="rl-avatar">{{ request.session.full_name|default:'S'|slice:':1'|upper }}</span>
+        <span class="rl-user"><strong>{{ request.session.full_name|default:'Student' }}</strong><small>{{ request.session.registration_id|default:'Student ID' }}</small></span>
+        <span class="rl-arrow" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="rl-dropdown">
+        <div class="rl-dropdown-hero"><span class="rl-avatar rl-avatar-large">{{ request.session.full_name|default:'S'|slice:':1'|upper }}</span><div><strong>{{ request.session.full_name|default:'Student' }}</strong><small>{{ request.session.registration_id|default:'Student ID' }}</small></div></div>
+        <span class="rl-menu-label">YOUR SPACE</span>
+        <a href="{% url 'profile' %}"><span>◉</span> My Profile</a>
+        <a href="{% url 'my_resources' %}"><span>▤</span> My Resources</a>
+        <a href="{% url 'my_requests' %}"><span>↗</span> Sent Requests</a>
+        <a href="{% url 'received_requests' %}"><span>↙</span> Received Requests</a>
+        <a href="{% url 'notifications' %}"><span>🔔</span> Notifications {% if navbar_unread_notifications %}({{ navbar_unread_notifications }}){% endif %}</a>
+        <a href="{% url 'resource_request_list' %}"><span>▦</span> Resource Request List</a>
+        <div class="rl-menu-separator"></div>
+        <a class="rl-logout" href="{% url 'logout' %}"><span>⇥</span> Log out</a>
+      </div>
+    </details>
+  </div>
+</header>
