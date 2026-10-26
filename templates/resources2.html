@@ -1,0 +1,520 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resources | ResourceLoop</title>
+
+    <link rel="stylesheet" href="{% static 'css/resources.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+
+<body>
+
+                                                   
+
+{% include 'includes/navbar.html' %}
+
+<main>
+
+                                                               
+
+    <section class="search-section">
+        <div class="search-container">
+
+            <div class="search-heading">
+                <span>FIND WHAT YOU NEED</span>
+
+                <h1>Explore student resources</h1>
+
+                <p>
+                    Search books, notes, equipment and study materials
+                    shared by your campus community.
+                </p>
+            </div>
+
+            <form method="GET"
+                  action="{% url 'resources' %}"
+                  class="search-box">
+
+                <span class="search-icon" aria-hidden="true">⌕</span>
+
+                <input
+                    type="search"
+                    name="search"
+                    placeholder="Search books, notes, equipment..."
+                    value="{{ search|default:'' }}"
+                    aria-label="Search resources"
+                >
+
+                {% if selected_category %}
+                    <input
+                        type="hidden"
+                        name="category"
+                        value="{{ selected_category }}"
+                    >
+                {% endif %}
+
+                <button type="submit">
+                    Search <span>→</span>
+                </button>
+
+            </form>
+
+        </div>
+    </section>
+
+
+                                                                 
+
+    <section class="category-section">
+        <div class="section-container">
+
+            <div class="category-title">
+                <p class="section-label">BROWSE BY CATEGORY</p>
+                <h2>Find what you need</h2>
+            </div>
+
+            <div class="resource-filter-nav">
+
+                                      
+
+                <a href="{% url 'resources' %}"
+                   class="filter-link filter-all {% if not selected_category %}active-filter{% endif %}">
+
+                    <span class="filter-icon">▦</span>
+
+                    <span class="filter-text">
+                        <strong>All Resources</strong>
+                        <small>Browse everything</small>
+                    </span>
+
+                </a>
+
+                              
+
+                <a href="{% url 'resources' %}?category=books"
+                   class="filter-link filter-books {% if selected_category == 'books' %}active-filter{% endif %}">
+
+                    <span class="filter-icon">📚</span>
+
+                    <span class="filter-text">
+                        <strong>Books</strong>
+                        <small>Textbooks &amp; guides</small>
+                    </span>
+
+                </a>
+
+                              
+
+                <a href="{% url 'resources' %}?category=notes"
+                   class="filter-link filter-notes {% if selected_category == 'notes' %}active-filter{% endif %}">
+
+                    <span class="filter-icon">📓</span>
+
+                    <span class="filter-text">
+                        <strong>Notes</strong>
+                        <small>Study notes</small>
+                    </span>
+
+                </a>
+
+                                  
+
+                <a href="{% url 'resources' %}?category=equipment"
+                   class="filter-link filter-equipment {% if selected_category == 'equipment' %}active-filter{% endif %}">
+
+                    <span class="filter-icon">⚙</span>
+
+                    <span class="filter-text">
+                        <strong>Equipment</strong>
+                        <small>Study tools</small>
+                    </span>
+
+                </a>
+
+                                           
+
+                <a href="{% url 'resources' %}?category=previous_questions"
+                   class="filter-link filter-questions {% if selected_category == 'previous_questions' %}active-filter{% endif %}">
+
+                    <span class="filter-icon">📄</span>
+
+                    <span class="filter-text">
+                        <strong>Previous Questions</strong>
+                        <small>Past papers</small>
+                    </span>
+
+                </a>
+
+                                         
+
+                <a href="{% url 'resources' %}?category=course_materials"
+                   class="filter-link filter-materials {% if selected_category == 'course_materials' %}active-filter{% endif %}">
+
+                    <span class="filter-icon">📁</span>
+
+                    <span class="filter-text">
+                        <strong>Course Materials</strong>
+                        <small>Slides &amp; handouts</small>
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+                                                                  
+
+    <section class="resources-section">
+        <div class="section-container">
+
+                                    
+
+            <div class="resource-top-bar">
+
+                <div>
+                    <p class="section-label">
+                        STUDENT COLLECTION
+                    </p>
+
+                    <h2>Available Resources</h2>
+
+                    <p class="showing-count">
+                        Showing
+                        <strong>{{ total_items }}</strong>
+                        resources
+                    </p>
+                </div>
+
+                <a href="{% url 'resources' %}" class="view-all-link">
+                    Browse All →
+                </a>
+
+            </div>
+
+
+                                  
+
+            {% if search %}
+
+                <div class="search-result-info">
+
+                    <span>
+                        Search results for
+                        <strong>"{{ search }}"</strong>
+                    </span>
+
+                    <a href="{% url 'resources' %}">
+                        Clear Search ×
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+
+                                                                       
+
+            <div class="cards">
+
+                {% for item in items %}
+
+                    <article class="resource-card card-{{ item.category }}">
+
+                                               
+
+                        <div class="card-image-wrap">
+
+                            {% if item.image %}
+
+                                <img
+                                    src="{{ item.image.url }}"
+                                    alt="{{ item.title }}"
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div class="default-image">
+
+                                    {% if item.category == "books" %}
+                                        📚
+                                    {% elif item.category == "notes" %}
+                                        📄
+                                    {% elif item.category == "equipment" %}
+                                        ⚙
+                                    {% elif item.category == "previous_questions" %}
+                                        📝
+                                    {% else %}
+                                        🎓
+                                    {% endif %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                                                   
+
+                            <span class="category-badge">
+                                {{ item.get_category_display }}
+                            </span>
+
+
+                                                     
+
+                            {% if item.share_type == "share" %}
+
+                                <span class="type-badge share-badge">
+                                    Share
+                                </span>
+
+                            {% elif item.share_type == "rent" %}
+
+                                <span class="type-badge rent-badge">
+                                    Rent
+                                </span>
+
+                            {% elif item.share_type == "sell" %}
+
+                                <span class="type-badge sell-badge">
+                                    Sell
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                                          
+
+                        <div class="card-body">
+
+                            <h3>{{ item.title }}</h3>
+
+                            <div class="meta-line">
+
+                                {% if item.course_code %}
+                                    <p>🏷 {{ item.course_code }}</p>
+                                {% endif %}
+
+                                {% if item.author %}
+                                    <p>👤 {{ item.author }}</p>
+                                {% endif %}
+
+                            </div>
+
+
+                                               
+
+                            {% if item.department %}
+
+                                <p class="department-text">
+                                    🎓 {{ item.department }}
+                                </p>
+
+                            {% endif %}
+
+
+                                          
+
+                            {% if item.price %}
+
+                                <p class="price">
+                                    ৳ {{ item.price }}
+
+                                    {% if item.share_type == "rent" %}
+                                        <span>/ day</span>
+                                    {% endif %}
+                                </p>
+
+                            {% endif %}
+
+
+                                                
+
+                            <p class="description">
+
+                                {% if item.description %}
+                                    {{ item.description|truncatewords:10 }}
+                                {% else %}
+                                    No description available.
+                                {% endif %}
+
+                            </p>
+
+
+                                                   
+
+                            <div class="button-row">
+
+                                <a href="{% url 'resource_detail' item.id %}"
+                                   class="details-btn">
+                                    View Details
+                                </a>
+
+                                {% if item.file %}
+
+                                    <a href="{{ item.file.url }}"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="file-btn">
+                                        View File
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                {% empty %}
+
+                                         
+
+                    <div class="no-resource">
+
+                        <div class="empty-icon">⌕</div>
+
+                        <h2>No resources found</h2>
+
+                        <p>
+                            Try another category or search keyword.
+                        </p>
+
+                        <a href="{% url 'resources' %}">
+                            Show All Resources
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+                                                                   
+
+            {% if page_obj.has_other_pages %}
+
+                <nav class="pagination"
+                     aria-label="Resource pages">
+
+                                     
+
+                    {% if page_obj.has_previous %}
+
+                        <a
+                            href="?{% if pagination_query %}{{ pagination_query }}&amp;{% endif %}page={{ page_obj.previous_page_number }}"
+                            class="page-btn"
+                        >
+                            ← Previous
+                        </a>
+
+                    {% endif %}
+
+
+                                         
+
+                    {% for num in page_obj.paginator.page_range %}
+
+                        {% if page_obj.number == num %}
+
+                            <span class="page-btn active"
+                                  aria-current="page">
+                                {{ num }}
+                            </span>
+
+                        {% else %}
+
+                            <a
+                                href="?{% if pagination_query %}{{ pagination_query }}&amp;{% endif %}page={{ num }}"
+                                class="page-btn"
+                            >
+                                {{ num }}
+                            </a>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+
+                                 
+
+                    {% if page_obj.has_next %}
+
+                        <a
+                            href="?{% if pagination_query %}{{ pagination_query }}&amp;{% endif %}page={{ page_obj.next_page_number }}"
+                            class="page-btn"
+                        >
+                            Next →
+                        </a>
+
+                    {% endif %}
+
+                </nav>
+
+                                          
+
+                <p class="pagination-info">
+                    Page {{ page_obj.number }}
+                    of {{ page_obj.paginator.num_pages }}
+                </p>
+
+            {% endif %}
+
+        </div>
+    </section>
+
+</main>
+
+
+                                                   
+
+<footer class="site-footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <h3>
+                <span class="footer-logo-mark">◕</span>
+                ResourceLoop
+            </h3>
+
+            <p>
+                Students today. A brighter tomorrow.
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'resources' %}">Resources</a>
+            <a href="{% url 'received_requests' %}">Requests</a>
+            <a href="{% url 'about' %}">About</a>
+
+        </div>
+
+        <div class="footer-copy">
+            © 2026 ResourceLoop
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

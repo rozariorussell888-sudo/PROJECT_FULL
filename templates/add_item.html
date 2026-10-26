@@ -1,0 +1,415 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Item | Resource Loop</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/add_item.css' %}"
+    >
+
+    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+
+<body>
+
+
+                                  
+               
+                                  
+
+{% include 'includes/navbar.html' %}
+
+
+
+                                  
+                      
+                                  
+
+<section class="add-item-section">
+
+
+    <div class="form-box">
+
+
+        <p class="tag">
+
+            SHARE WITH YOUR COMMUNITY
+
+        </p>
+
+
+        <h1>
+
+            Add Item
+
+        </h1>
+
+
+        <p class="subtitle">
+
+            Add books, notes, equipment, previous questions or course materials.
+
+        </p>
+
+
+
+        {% if error %}
+
+        <div class="error-box">
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="success-box">
+
+                {{ message }}
+
+            </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+
+
+                          
+
+            <div class="form-group">
+
+                <label>
+                    Item Title
+                </label>
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Enter item title"
+                    required
+                >
+
+            </div>
+
+
+
+                             
+
+            <div class="form-group">
+
+                <label>
+                    Category
+                </label>
+
+                <select
+                    name="category"
+                    required
+                >
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="books">
+                        Books
+                    </option>
+
+                    <option value="notes">
+                        Notes
+                    </option>
+
+                    <option value="equipment">
+                        Equipment
+                    </option>
+
+                    <option value="previous_questions">
+                        Previous Questions
+                    </option>
+
+                    <option value="course_materials">
+                        Course Materials
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+                                
+
+            <div class="information-box">
+
+                <h3>
+                    Sharing Rules
+                </h3>
+
+                <p>
+                    📖 Books — Share only
+                </p>
+
+                <p>
+                    📄 Notes — Share only
+                </p>
+
+                <p>
+                    ⚙ Equipment — Share, Rent or Sell
+                </p>
+
+                <p>
+                    ❓ Previous Questions — Share only
+                </p>
+
+                <p>
+                    🎓 Course Materials — Share only
+                </p>
+
+            </div>
+
+
+
+                                
+
+            <div class="form-group">
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    name="description"
+                    rows="5"
+                    placeholder="Write details about your item..."
+                ></textarea>
+
+            </div>
+
+
+
+                           
+
+            <div class="form-group">
+
+                <label>
+                    Author
+                </label>
+
+                <input
+                    type="text"
+                    name="author"
+                    placeholder="Author name (if applicable)"
+                >
+
+            </div>
+
+
+
+                               
+
+            <div class="form-group">
+
+                <label>
+                    Department
+                </label>
+
+                <input
+                    type="text"
+                    name="department"
+                    placeholder="Example: CSE"
+                >
+
+            </div>
+
+
+
+                                
+
+            <div class="form-group">
+
+                <label>
+                    Course Code
+                </label>
+
+                <input
+                    type="text"
+                    name="course_code"
+                    placeholder="Example: CSE 305"
+                >
+
+            </div>
+
+
+
+                               
+
+            <div class="form-group">
+
+                <label>
+                    Item Type
+                </label>
+
+                <select name="share_type">
+
+                    <option value="share">
+                        Share
+                    </option>
+
+                    <option value="rent">
+                        Rent — Equipment Only
+                    </option>
+
+                    <option value="sell">
+                        Sell — Equipment Only
+                    </option>
+
+                </select>
+
+
+                <p class="help-text">
+
+                    Rent and Sell can only be used for Equipment.
+                    Other categories will automatically be saved as Share.
+
+                </p>
+
+            </div>
+
+
+
+                          
+
+            <div class="form-group">
+
+                <label>
+                    Price
+                </label>
+
+                <input
+                    type="number"
+                    name="price"
+                    step="0.01"
+                    min="0"
+                    placeholder="Required only for Equipment Rent or Sell"
+                >
+
+
+                <p class="help-text">
+
+                    Leave empty when sharing for free.
+
+                </p>
+
+            </div>
+
+
+
+                          
+
+            <div class="form-group">
+
+                <label>
+                    Item Image
+                </label>
+
+                <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                >
+
+            </div>
+
+
+
+                         
+
+            <div class="form-group">
+
+                <label>
+                    Resource File
+                </label>
+
+                <input
+                    type="file"
+                    name="file"
+                >
+
+
+                <p class="help-text">
+
+                    Upload PDF, notes, questions or course materials if needed.
+
+                </p>
+
+            </div>
+
+
+
+                            
+
+            <div class="form-buttons">
+
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="cancel-button"
+                >
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+
+                    Add Item
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</section>
+
+
+</body>
+
+</html>

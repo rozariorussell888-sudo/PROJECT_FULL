@@ -1,0 +1,688 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Resources | Resource Loop</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/my_resources.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+
+<body>
+
+
+                                                  
+               
+                                                  
+
+{% include 'includes/navbar.html' %}
+
+
+
+                                                  
+             
+                                                  
+
+<main class="my-resource-section">
+
+
+                                                  
+                     
+                                                  
+
+    <section class="top-area">
+
+
+        <div class="top-left">
+
+            <p class="tag">
+                MY COLLECTION
+            </p>
+
+            <h1>
+                My <span>Resources</span>
+            </h1>
+
+            <p class="subtitle">
+                View, manage and organize all the resources
+                you have shared with the Resource Loop community.
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'add_item' %}"
+           class="add-item-button">
+
+            <span class="plus-icon">
+                +
+            </span>
+
+            Add New Resource
+
+        </a>
+
+
+    </section>
+
+
+
+                                                  
+                            
+                                                  
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="message-box">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+
+                                                  
+                            
+                                                  
+
+    <section class="dashboard-stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📚
+            </div>
+
+            <div>
+
+                <p>
+                    Total Resources
+                </p>
+
+                <strong>
+                    {{ total_items }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📖
+            </div>
+
+            <div>
+
+                <p>
+                    Books
+                </p>
+
+                <strong>
+                    {{ books_count }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📝
+            </div>
+
+            <div>
+
+                <p>
+                    Notes
+                </p>
+
+                <strong>
+                    {{ notes_count }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💻
+            </div>
+
+            <div>
+
+                <p>
+                    Equipment
+                </p>
+
+                <strong>
+                    {{ equipment_count }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+                                                  
+                       
+                                                  
+
+    <section class="filter-area">
+
+
+        <div class="filter-left">
+
+
+            <a href="{% url 'my_resources' %}"
+               class="filter-btn
+               {% if not selected_category %}
+                   active-filter
+               {% endif %}">
+
+                All
+
+            </a>
+
+
+            <a href="{% url 'my_resources' %}?category=books"
+               class="filter-btn
+               {% if selected_category == 'books' %}
+                   active-filter
+               {% endif %}">
+
+                Books
+
+            </a>
+
+
+            <a href="{% url 'my_resources' %}?category=notes"
+               class="filter-btn
+               {% if selected_category == 'notes' %}
+                   active-filter
+               {% endif %}">
+
+                Notes
+
+            </a>
+
+
+            <a href="{% url 'my_resources' %}?category=equipment"
+               class="filter-btn
+               {% if selected_category == 'equipment' %}
+                   active-filter
+               {% endif %}">
+
+                Equipment
+
+            </a>
+
+
+            <a href="{% url 'my_resources' %}?category=previous_questions"
+               class="filter-btn
+               {% if selected_category == 'previous_questions' %}
+                   active-filter
+               {% endif %}">
+
+                Previous Questions
+
+            </a>
+
+
+            <a href="{% url 'my_resources' %}?category=course_materials"
+               class="filter-btn
+               {% if selected_category == 'course_materials' %}
+                   active-filter
+               {% endif %}">
+
+                Course Materials
+
+            </a>
+
+
+        </div>
+
+
+
+                         
+                                      
+
+        <div class="filter-right">
+
+            <span>
+                Sort by:
+            </span>
+
+            <select>
+
+                <option>
+                    Newest First
+                </option>
+
+                <option>
+                    Oldest First
+                </option>
+
+                <option>
+                    Name A-Z
+                </option>
+
+            </select>
+
+        </div>
+
+
+    </section>
+
+
+
+                                                  
+                          
+                                                  
+
+    <section class="resource-grid">
+
+
+        {% for item in items %}
+
+
+            <article class="resource-card">
+
+
+                                                          
+                                   
+                                                          
+
+                <div class="image-area">
+
+
+                    {% if item.image %}
+
+                        <img src="{{ item.image.url }}"
+                             alt="{{ item.title }}">
+
+                    {% else %}
+
+                        <div class="default-image">
+
+                            {% if item.category == "books" %}
+
+                                📚
+
+                            {% elif item.category == "notes" %}
+
+                                📝
+
+                            {% elif item.category == "equipment" %}
+
+                                💻
+
+                            {% elif item.category == "previous_questions" %}
+
+                                📄
+
+                            {% elif item.category == "course_materials" %}
+
+                                🎓
+
+                            {% else %}
+
+                                📦
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                                           
+
+                    <span class="category">
+
+                        {% if item.category == "books" %}
+
+                            📚 Books
+
+                        {% elif item.category == "notes" %}
+
+                            📝 Notes
+
+                        {% elif item.category == "equipment" %}
+
+                            💻 Equipment
+
+                        {% elif item.category == "previous_questions" %}
+
+                            📄 Previous Question
+
+                        {% elif item.category == "course_materials" %}
+
+                            🎓 Course Material
+
+                        {% else %}
+
+                            Resource
+
+                        {% endif %}
+
+                    </span>
+
+
+
+                                                      
+
+                    <span class="item-type {{ item.share_type }}">
+
+                        {{ item.get_share_type_display }}
+
+                    </span>
+
+
+                </div>
+
+
+
+                                                          
+                                     
+                                                          
+
+                <div class="card-content">
+
+
+                    <h2>
+                        {{ item.title }}
+                    </h2>
+
+
+
+                                 
+
+                    <div class="meta-area">
+
+
+                        {% if item.course_code %}
+
+                            <p>
+                                📘 {{ item.course_code }}
+                            </p>
+
+                        {% endif %}
+
+
+                        {% if item.department %}
+
+                            <p>
+                                🎓 {{ item.department }}
+                            </p>
+
+                        {% endif %}
+
+
+                        {% if item.author %}
+
+                            <p>
+                                👤 {{ item.author }}
+                            </p>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+
+                                                              
+                                  
+                                                              
+
+                    {% if item.share_type == "rent" %}
+
+                        <div class="price">
+
+                            ৳ {{ item.price }}
+
+                            <span>
+                                / rent
+                            </span>
+
+                        </div>
+
+
+                    {% elif item.share_type == "sell" %}
+
+                        <div class="price">
+
+                            ৳ {{ item.price }}
+
+                        </div>
+
+
+                    {% else %}
+
+                        <div class="price free-price">
+
+                            Free
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                                                              
+                                        
+                                                              
+
+                    <p class="description">
+
+                        {% if item.description %}
+
+                            {{ item.description|truncatechars:100 }}
+
+                        {% else %}
+
+                            No description available.
+
+                        {% endif %}
+
+                    </p>
+
+
+
+                                                              
+                                           
+                                                              
+
+                    <div class="action-buttons">
+
+
+                                     
+
+                        <a href="{% url 'resource_detail' item.id %}"
+                           class="view-btn">
+
+                            👁 View
+
+                        </a>
+
+
+
+                                     
+
+                        <a href="{% url 'edit_item' item.id %}"
+                           class="edit-btn">
+
+                            ✎ Edit
+
+                        </a>
+
+
+
+                                       
+
+                        <form method="POST"
+                              action="{% url 'delete_item' item.id %}">
+
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="delete-btn"
+                                   >
+
+                                🗑 Delete
+
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </article>
+
+
+        {% empty %}
+
+
+                                                      
+                                
+                                                      
+
+            <div class="empty-state">
+
+
+                <div class="empty-icon">
+                    📂
+                </div>
+
+
+                {% if selected_category %}
+
+                    <h2>
+                        No resources in this category
+                    </h2>
+
+                    <p>
+                        You have not added any resource
+                        in this category yet.
+                    </p>
+
+                    <a href="{% url 'my_resources' %}">
+                        View All Resources
+                    </a>
+
+
+                {% else %}
+
+                    <h2>
+                        No resources yet
+                    </h2>
+
+                    <p>
+                        You haven't added any resources yet.
+                        Add your first resource and start sharing
+                        with other students.
+                    </p>
+
+                    <a href="{% url 'add_item' %}">
+                        + Add New Resource
+                    </a>
+
+                {% endif %}
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </section>
+
+
+</main>
+
+
+
+                                                  
+               
+                                                  
+
+<footer>
+
+
+    <div class="footer-brand">
+
+        <h3>
+            🎓 Resource<span>Loop</span>
+        </h3>
+
+        <p>
+            Share • Learn • Grow
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'resources' %}">
+            Resources
+        </a>
+
+        <a href="{% url 'my_resources' %}">
+            My Resources
+        </a>
+
+        <a href="{% url 'profile' %}">
+            Profile
+        </a>
+
+    </div>
+
+
+    <div class="copyright">
+        © 2026 Resource Loop
+    </div>
+
+
+</footer>
+
+
+</body>
+
+</html>

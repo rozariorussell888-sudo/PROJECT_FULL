@@ -1,0 +1,224 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResourceLoop | Share Knowledge</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+<body>
+
+{% include 'includes/navbar.html' %}
+
+<main>
+                 
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <p class="eyebrow hero-eyebrow">FOR A BRIGHTER, MORE SHARED TOMORROW</p>
+                <h1>Share knowledge.<br>Go further, <em>together.</em></h1>
+                <p class="hero-description">
+                    ResourceLoop is a student-led platform for sharing and requesting
+                    study resources. Give what you can, get what you need, and help
+                    build a more supportive learning community.
+                </p>
+                <a class="primary-button" href="{% url 'resources' %}">
+                    Explore Resources <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <div class="hero-visual"
+                 role="img"
+                 aria-label="Books, study desk, laptop and plants"></div>
+        </div>
+    </section>
+
+                       
+    <section class="stats" aria-label="Our community in numbers">
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <circle cx="12" cy="8" r="3.5"/>
+                    <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+                </svg>
+            </div>
+            <div>
+                <strong>300+</strong>
+                <span>Active Students</span>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M6 2h8l4 4v16H6z"/>
+                    <path d="M14 2v5h4M9 12h6M9 16h6"/>
+                </svg>
+            </div>
+            <div>
+                <strong>500+</strong>
+                <span>Resources Shared</span>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M12 21s-9-5.2-9-11.4a5.1 5.1 0 0 1 9-3.3 5.1 5.1 0 0 1 9 3.3C21 15.8 12 21 12 21Z"/>
+                </svg>
+            </div>
+            <div>
+                <strong>150+</strong>
+                <span>Successful Exchanges</span>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M12 2 8.6 8.9 1 10l5.5 5.4-1.3 7.6L12 19.4l6.8 3.6-1.3-7.6L23 10l-7.6-1.1Z"/>
+                </svg>
+            </div>
+            <div>
+                <strong>4.8/5</strong>
+                <span>Student Satisfaction</span>
+            </div>
+        </div>
+    </section>
+
+                       
+    <section class="categories section-container" id="categories">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">EXPLORE BY CATEGORY</p>
+                <h2>Find what you need</h2>
+            </div>
+            <a class="text-link" href="{% url 'resources' %}">
+                Browse all resources <span>→</span>
+            </a>
+        </div>
+
+        <div class="category-grid">
+            <a class="category-card cat-books" href="{% url 'resources' %}?category=books">
+                <span class="category-illustration">📚</span>
+                <span class="category-label">
+                    <strong>Books</strong>
+                    <small>Textbooks, readings<br>and more</small>
+                </span>
+                <span class="round-arrow">→</span>
+            </a>
+
+            <a class="category-card cat-notes" href="{% url 'resources' %}?category=notes">
+                <span class="category-illustration">📓</span>
+                <span class="category-label">
+                    <strong>Notes</strong>
+                    <small>Lecture notes,<br>summaries and guides</small>
+                </span>
+                <span class="round-arrow">→</span>
+            </a>
+
+            <a class="category-card cat-equipment" href="{% url 'resources' %}?category=equipment">
+                <span class="category-illustration">🎧</span>
+                <span class="category-label">
+                    <strong>Equipment</strong>
+                    <small>Calculators, lab gear<br>and study tools</small>
+                </span>
+                <span class="round-arrow">→</span>
+            </a>
+
+            <a class="category-card cat-questions" href="{% url 'resources' %}?category=previous_questions">
+                <span class="category-illustration">📑</span>
+                <span class="category-label">
+                    <strong>Previous Questions</strong>
+                    <small>Past papers and<br>practice questions</small>
+                </span>
+                <span class="round-arrow">→</span>
+            </a>
+
+            <a class="category-card cat-materials" href="{% url 'resources' %}?category=course_materials">
+                <span class="category-illustration">📁</span>
+                <span class="category-label">
+                    <strong>Course Materials</strong>
+                    <small>Slides, syllabi<br>and handouts</small>
+                </span>
+                <span class="round-arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+                                          
+    <section class="how-section section-container" id="how-it-works">
+        <div class="how-heading">
+            <p class="eyebrow">HOW IT WORKS</p>
+            <h2>A simple loop<br>with a big impact</h2>
+        </div>
+
+        <div class="how-steps">
+            <div class="step">
+                <span class="step-number">1</span>
+                <div>
+                    <h3>Share or request</h3>
+                    <p>Upload a resource or make a request for something you need.</p>
+                </div>
+            </div>
+
+            <span class="step-arrow" aria-hidden="true">→</span>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div>
+                    <h3>Connect</h3>
+                    <p>Get matched with students in your community.</p>
+                </div>
+            </div>
+
+            <span class="step-arrow" aria-hidden="true">→</span>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div>
+                    <h3>Learn together</h3>
+                    <p>Access resources, support each other, and keep the loop going.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+                
+    <section class="cta-section section-container" id="about">
+        <div>
+            <p class="eyebrow">JOIN THE COMMUNITY</p>
+            <h2>Better resources. Brighter futures.</h2>
+            <p>Share what you have. Learn what you need. Together.</p>
+        </div>
+        <a class="primary-button" href="{% url 'resources' %}">
+            Get Started <span>→</span>
+        </a>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <a href="{% url 'home' %}" class="footer-logo">
+            <span class="footer-mark">◕</span> ResourceLoop
+        </a>
+        <span class="footer-tagline">Students today. A brighter tomorrow.</span>
+
+        <nav aria-label="Footer navigation">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'resources' %}">Resources</a>
+            <a href="{% url 'received_requests' %}">Requests</a>
+            <a href="{% url 'about' %}">About</a>
+        </nav>
+
+        <p>A student community for more open, supportive education.</p>
+    </div>
+</footer>
+</body>
+</html>
