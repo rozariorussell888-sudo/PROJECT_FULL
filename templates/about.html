@@ -1,0 +1,300 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | ResourceLoop</title>
+
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+<body>
+
+               
+{% include 'includes/navbar.html' %}
+
+<main>
+
+                       
+    <section class="about-hero">
+        <div class="hero-inner">
+
+            <div class="hero-copy">
+                <span class="eyebrow">GET TO KNOW RESOURCELOOP</span>
+
+                <h1>
+                    Sharing resources.<br>
+                    <em>Growing together.</em>
+                </h1>
+
+                <p>
+                    We believe every student deserves access to the
+                    resources they need to learn, grow and succeed.
+                    ResourceLoop brings students together through
+                    the simple idea of sharing knowledge.
+                </p>
+
+                <a href="{% url 'resources' %}" class="primary-btn">
+                    Explore Resources <span>→</span>
+                </a>
+            </div>
+
+            <div class="hero-art">
+                <div class="circle circle-one"></div>
+                <div class="circle circle-two"></div>
+
+                <div class="art-book book-one">KNOWLEDGE</div>
+                <div class="art-book book-two">SHARING</div>
+                <div class="art-book book-three">GROWTH</div>
+
+                <div class="art-sticker sticker-top">✦</div>
+                <div class="art-sticker sticker-bottom">✧</div>
+
+                <div class="art-note">
+                    Small acts of sharing.<br>
+                    Big opportunities to learn.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+                         
+    <section class="about-intro section-container">
+        <div class="intro-heading">
+            <span class="section-label">OUR STORY</span>
+
+            <h2>
+                Learning becomes better<br>
+                when we <em>share.</em>
+            </h2>
+        </div>
+
+        <div class="intro-description">
+            <p>
+                ResourceLoop is a student-focused platform designed
+                to make educational resources easier to discover,
+                share and access.
+            </p>
+
+            <p>
+                Whether it is a textbook, class notes, previous
+                exam questions, course materials or useful equipment,
+                students can connect with others who have the
+                resources they need.
+            </p>
+        </div>
+    </section>
+
+                               
+    <section class="mission-section">
+        <div class="section-container">
+
+            <div class="mission-grid">
+
+                <article class="mission-card">
+                    <div class="mission-icon">◎</div>
+                    <span class="section-label">OUR MISSION</span>
+                    <h3>Make learning accessible.</h3>
+
+                    <p>
+                        To help students share useful academic resources,
+                        reduce unnecessary barriers and support one another
+                        throughout their educational journey.
+                    </p>
+                </article>
+
+                <article class="vision-card">
+                    <div class="mission-icon">✦</div>
+                    <span class="section-label">OUR VISION</span>
+                    <h3>A more connected campus.</h3>
+
+                    <p>
+                        To build a supportive student community where
+                        knowledge moves freely, resources are valued,
+                        and every student has more opportunities to learn.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+                     
+    <section class="values-section section-container">
+
+        <div class="center-heading">
+            <span class="section-label">WHAT MAKES US DIFFERENT</span>
+            <h2>Built for students, by students.</h2>
+            <p>Simple ideas that make a meaningful difference.</p>
+        </div>
+
+        <div class="values-grid">
+
+            <div class="value-item">
+                <div class="value-icon green">↗</div>
+                <h3>Share Knowledge</h3>
+
+                <p>
+                    Give your unused or helpful resources
+                    a second purpose.
+                </p>
+            </div>
+
+            <div class="value-item">
+                <div class="value-icon peach">♡</div>
+                <h3>Support Each Other</h3>
+
+                <p>
+                    Help fellow students find what they
+                    need to move forward.
+                </p>
+            </div>
+
+            <div class="value-item">
+                <div class="value-icon lavender">∞</div>
+                <h3>Learn Together</h3>
+
+                <p>
+                    Build stronger connections through
+                    shared academic experiences.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+                         
+    <section class="team-section" id="team">
+        <div class="section-container">
+
+            <div class="center-heading">
+                <span class="section-label">
+                    THE PEOPLE BEHIND THE PLATFORM
+                </span>
+
+                <h2>Meet Our Team</h2>
+
+                <p>
+                    Three individuals working together to create
+                    a better resource-sharing experience for students.
+                </p>
+            </div>
+
+            <div class="team-grid">
+
+                                          
+                <article class="team-card member-one">
+
+                    <div class="team-photo-wrap">
+                        <img
+                            src="{% static 'images/Russell.jpeg' %}"
+                            alt="Russell"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="team-info">
+                        <span class="member-label">TEAM MEMBER 01</span>
+                        <h3>Russell</h3>
+                        <p class="member-role">Development Team</p>
+
+                        <p class="member-description">
+                            Passionate about building useful digital
+                            experiences that make student life easier.
+                        </p>
+                    </div>
+                </article>
+
+                                        
+                <article class="team-card member-two">
+
+                    <div class="team-photo-wrap">
+                        <img
+                            src="{% static 'images/Abrar.jpeg' %}"
+                            alt="Abrar"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="team-info">
+                        <span class="member-label">TEAM MEMBER 02</span>
+                        <h3>Abrar</h3>
+                        <p class="member-role">Development Team</p>
+
+                        <p class="member-description">
+                            Focused on making ResourceLoop accessible,
+                            reliable and easy for students to use.
+                        </p>
+                    </div>
+                </article>
+
+                                         
+                <article class="team-card member-three">
+
+                    <div class="team-photo-wrap">
+                        <img
+                            src="{% static 'images/tahsin.jpeg' %}"
+                            alt="Tahsin"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="team-info">
+                        <span class="member-label">TEAM MEMBER 03</span>
+                        <h3>Tahsin</h3>
+                        <p class="member-role">Development Team</p>
+
+                        <p class="member-description">
+                            Dedicated to creating a welcoming platform
+                            where sharing and learning go hand in hand.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+                
+    <section class="cta-section section-container">
+
+        <div>
+            <span class="section-label">BE PART OF THE LOOP</span>
+            <h2>Good resources deserve to be shared.</h2>
+            <p>Discover what you need and help someone else do the same.</p>
+        </div>
+
+        <a href="{% url 'resources' %}" class="primary-btn">
+            Explore Resources <span>→</span>
+        </a>
+
+    </section>
+
+</main>
+
+               
+<footer class="site-footer">
+    <div class="footer-container">
+
+        <div class="footer-brand">
+            <h3>◕ ResourceLoop</h3>
+            <p>Students today. A brighter tomorrow.</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'resources' %}">Resources</a>
+            <a href="{% url 'received_requests' %}">Requests</a>
+            <a href="{% url 'about' %}">About</a>
+        </div>
+
+        <p class="footer-copy">© 2026 ResourceLoop</p>
+
+    </div>
+</footer>
+
+</body>
+</html>

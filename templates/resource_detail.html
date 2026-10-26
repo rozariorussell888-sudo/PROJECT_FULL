@@ -1,0 +1,655 @@
+
+{% load static %}
+{% load contact_links %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ item.title }} | Resource Loop</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/resource_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shared_theme.css' %}">
+</head>
+
+<body>
+
+                                              
+               
+                                              
+
+{% include 'includes/navbar.html' %}
+
+
+                                              
+                     
+                                              
+
+<main class="page-container">
+
+                            
+
+    {% if messages %}
+        {% for message in messages %}
+            <p role="status"
+               style="padding:12px 16px;
+                      margin-bottom:14px;
+                      background:#eaf6ee;
+                      border-radius:8px;">
+                {{ message }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+                        
+
+    <a href="{% url 'resources' %}"
+       class="back-button">
+        ← Back to Resources
+    </a>
+
+
+                                              
+                             
+                                              
+
+    <section class="detail-card">
+
+                                  
+
+        <div class="image-section">
+
+            <div class="main-image-box">
+
+                {% if item.image %}
+
+                    <img src="{{ item.image.url }}"
+                         alt="{{ item.title }}">
+
+                {% else %}
+
+                    <div class="default-resource-image">
+
+                        {% if item.category == "books" %}
+                            📚
+
+                        {% elif item.category == "notes" %}
+                            📄
+
+                        {% elif item.category == "equipment" %}
+                            ⚙
+
+                        {% elif item.category == "previous_questions" %}
+                            ❓
+
+                        {% else %}
+                            🎓
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+                                         
+
+            <div class="small-image-row">
+
+                <div class="small-image active-thumb">
+
+                    {% if item.image %}
+
+                        <img src="{{ item.image.url }}"
+                             alt="{{ item.title }}">
+
+                    {% else %}
+                        📚
+                    {% endif %}
+
+                </div>
+
+                <div class="small-image">
+                    📖
+                </div>
+
+                <div class="small-image">
+                    📚
+                </div>
+
+                <div class="small-image">
+                    📝
+                </div>
+
+            </div>
+
+        </div>
+
+
+                                        
+
+        <div class="detail-info">
+
+                                             
+
+            <div class="top-badges">
+
+                <span class="category-badge">
+                    {{ item.get_category_display }}
+                </span>
+
+                {% if item.share_type == "share" %}
+
+                    <span class="type-badge share">
+                        Share
+                    </span>
+
+                {% elif item.share_type == "rent" %}
+
+                    <span class="type-badge rent">
+                        Rent
+                    </span>
+
+                {% elif item.share_type == "sell" %}
+
+                    <span class="type-badge sell">
+                        Sell
+                    </span>
+
+                {% endif %}
+
+                <button type="button"
+                        class="favorite-btn">
+                    ♡
+                </button>
+
+            </div>
+
+
+                                  
+
+            <h1>{{ item.title }}</h1>
+
+            {% if item.description %}
+
+                <p class="short-description">
+                    {{ item.description|truncatewords:12 }}
+                </p>
+
+            {% endif %}
+
+
+                                                      
+                                     
+                                                      
+
+            <div class="meta-list">
+
+                               
+
+                {% if item.author %}
+
+                    <div class="meta-row">
+
+                        <span class="meta-icon">
+                            👤
+                        </span>
+
+                        <strong>Author:</strong>
+
+                        <span>
+                            {{ item.author }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                                    
+
+                {% if item.course_code %}
+
+                    <div class="meta-row">
+
+                        <span class="meta-icon">
+                            🏷
+                        </span>
+
+                        <strong>Course Code:</strong>
+
+                        <span>
+                            {{ item.course_code }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                                   
+
+                {% if item.department %}
+
+                    <div class="meta-row">
+
+                        <span class="meta-icon">
+                            🏛
+                        </span>
+
+                        <strong>Department:</strong>
+
+                        <span>
+                            {{ item.department }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                                    
+
+                {% if item.student %}
+
+                    <div class="meta-row">
+
+                        <span class="meta-icon">
+                            🎓
+                        </span>
+
+                        <strong>Uploaded By:</strong>
+
+                        <span>
+                            {{ item.student.full_name }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+                                                      
+                                   
+                                                      
+
+            <div class="price-date-box">
+
+                <div class="price-area">
+
+                    {% if item.price %}
+
+                        <span class="price">
+                            ৳ {{ item.price }}
+                        </span>
+
+                        {% if item.share_type == "rent" %}
+
+                            <small>/ rent</small>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <span class="free-text">
+                            Free
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="date-area">
+
+                    <span>📅</span>
+
+                    <div>
+
+                        <small>
+                            Posted on:
+                        </small>
+
+                        <strong>
+                            {{ item.created_at|date:"d M Y" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+                                                      
+                                   
+                                                      
+
+            <div class="action-buttons">
+
+                                      
+
+                {% if item.file %}
+
+                    <a href="{{ item.file.url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="download-btn">
+
+                        ⇩ View / Download File
+
+                    </a>
+
+                {% endif %}
+
+
+                                                          
+                                             
+                                                          
+
+                {% if item.category == "equipment" and item.student %}
+
+                    {% if item.student.id != request.session.student_id %}
+
+                        <form method="POST"
+                              action="{% url 'send_product_request' item.id %}"
+                              class="request-form">
+
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="request-btn">
+                                ✈ Send Request
+                            </button>
+
+                        </form>
+
+                    {% else %}
+
+                        <p class="owner-note">
+                            This is your resource.
+                        </p>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <p class="owner-note">
+                        Requests are unavailable for this resource.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+                                              
+                                      
+                                              
+
+    <section class="lower-grid">
+
+                            
+
+        <div class="description-card">
+
+            <div class="section-title">
+
+                <span>📄</span>
+
+                <h2>Description</h2>
+
+            </div>
+
+            <p>
+
+                {% if item.description %}
+
+                    {{ item.description }}
+
+                {% else %}
+
+                    No description available for this resource.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+                                
+
+        <div class="additional-card">
+
+            <div class="section-title">
+
+                <span>ⓘ</span>
+
+                <h2>Additional Info</h2>
+
+            </div>
+
+
+                             
+
+            <div class="info-row">
+
+                <span>📁</span>
+
+                <strong>Category:</strong>
+
+                <span>
+                    {{ item.get_category_display }}
+                </span>
+
+            </div>
+
+
+                               
+
+            <div class="info-row">
+
+                <span>🔄</span>
+
+                <strong>Type:</strong>
+
+                <span>
+                    {{ item.get_share_type_display }}
+                </span>
+
+            </div>
+
+
+                               
+
+            <div class="info-row">
+
+                <span>📅</span>
+
+                <strong>Added:</strong>
+
+                <span>
+                    {{ item.created_at|date:"d M Y" }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+                                              
+                                   
+                                              
+
+    {% if item.student and can_contact_owner %}
+
+        <section class="contact-card">
+
+            <div class="contact-heading">
+
+                <div>
+
+                    <p class="contact-small-title">
+                        RESOURCE OWNER
+                    </p>
+
+                    <h2>Contact Owner</h2>
+
+                </div>
+
+                <div class="owner-avatar">
+                    👤
+                </div>
+
+            </div>
+
+
+            <div class="contact-content">
+
+                <div class="owner-information">
+
+                                       
+
+                    <div class="owner-name">
+
+                        <strong>
+                            {{ item.student.full_name }}
+                        </strong>
+
+                        <span>
+                            Resource Owner
+                        </span>
+
+                    </div>
+
+
+                                         
+
+                    {% if item.student.phone %}
+
+                        <div class="phone-info">
+
+                            <span>📞</span>
+
+                            <div>
+
+                                <small>
+                                    Phone Number
+                                </small>
+
+                                <strong>
+                                    {{ item.student.phone }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                                        
+
+                {% if item.student.phone %}
+
+                    <div class="contact-buttons">
+
+                                           
+
+                        <a href="tel:{{ item.student.phone }}"
+                           class="call-btn">
+
+                            📞 Call Owner
+
+                        </a>
+
+
+                                               
+
+                        <a href="https://wa.me/{{ item.student.phone|whatsapp_phone }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="whatsapp-btn">
+
+                            💬 WhatsApp
+
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+</main>
+
+
+                                              
+               
+                                              
+
+<footer>
+
+    <div class="footer-container">
+
+        <div>
+
+            <h3>
+                🎓 Resource<span>Loop</span>
+            </h3>
+
+            <p>
+                Share | Borrow | Learn Together
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'resources' %}">
+                Resources
+            </a>
+
+            <a href="{% url 'received_requests' %}">
+                Requests
+            </a>
+
+            <a href="#">
+                About
+            </a>
+
+        </div>
+
+        <div class="copyright">
+            © 2026 Resource Loop
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
