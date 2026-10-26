@@ -1,0 +1,7 @@
+{% load static %}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Create a Resource Request | ResourceLoop</title><link rel="stylesheet" href="{% static 'css/shared_theme.css' %}"><link rel="stylesheet" href="{% static 'css/requests_form.css' %}"></head><body>
+{% include 'includes/navbar.html' %}
+<main class="rl-form-shell"><a class="rl-back" href="{% url 'home' %}">← Back</a><p class="rl-kicker">RESOURCELOOP COMMUNITY</p><h1>Create a Resource Request</h1><p class="rl-form-intro">Tell other students what study material you are looking for.</p>
+<form method="post" class="rl-form-card">{% csrf_token %}{% if form.non_field_errors %}<div class="rl-errors">{{ form.non_field_errors }}</div>{% endif %}
+{% for field in form %}<div class="rl-field"><label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="rl-required">*</span>{% endif %}</label>{{ field }}{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}{% for error in field.errors %}<p class="rl-error">{{ error }}</p>{% endfor %}</div>{% endfor %}
+<div class="rl-form-footer"><button type="submit">Submit Request</button><a href="{% url 'home' %}">Cancel</a></div></form></main></body></html>
