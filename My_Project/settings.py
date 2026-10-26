@@ -5,6 +5,7 @@ ResourceLoop - Student Resource Sharing System
 """
 
 import os
+import dj_database_url
 from pathlib import Path
 
 
@@ -32,10 +33,12 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "full-and-final.vercel.app",
+  ".onrender.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://full-and-final.vercel.app",
+  "https://*.onrender.com",
 ]
 
 
@@ -70,6 +73,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+  "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 
@@ -120,10 +124,11 @@ WSGI_APPLICATION = "My_Project.wsgi.application"
                                             
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 
@@ -172,6 +177,15 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
 
                                             
                                
@@ -204,3 +218,8 @@ EMAIL_HOST_PASSWORD = "kjir gvnh brpz saoi"
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_TIMEOUT = 30
+
+
+
+
+
