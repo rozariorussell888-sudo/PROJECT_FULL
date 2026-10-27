@@ -35,15 +35,14 @@ ALLOWED_HOSTS = [
     'localhost',
     'full-and-final.vercel.app',
     '.onrender.com',
-    'domain-searching-manual-routing.trycloudflare.com',
+    'liability-emily-portsmouth-measured.trycloudflare.com',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://full-and-final.vercel.app",
     "https://*.onrender.com",
-    "https://domain-searching-manual-routing.trycloudflare.com",
-]                                   
-                
+    "https://liability-emily-portsmouth-measured.trycloudflare.com",
+]              
                                             
 
 INSTALLED_APPS = [
