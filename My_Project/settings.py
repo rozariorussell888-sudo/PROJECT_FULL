@@ -29,19 +29,23 @@ DEBUG = os.environ.get(
     "DJANGO_DEBUG", "True"
 ).lower() == "true"
 
+
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "full-and-final.vercel.app",
-  ".onrender.com",
+    '127.0.0.1',
+    'localhost',
+    'full-and-final.vercel.app',
+    '.onrender.com',
+    'handled-everyone-scoring-hash.trycloudflare.com',
 ]
+
+
+
 
 CSRF_TRUSTED_ORIGINS = [
     "https://full-and-final.vercel.app",
-  "https://*.onrender.com",
+    "https://*.onrender.com",
+    "https://handled-everyone-scoring-hash.trycloudflare.com",
 ]
-
-
                                             
                 
                                             
