@@ -35,18 +35,14 @@ ALLOWED_HOSTS = [
     'localhost',
     'full-and-final.vercel.app',
     '.onrender.com',
-    'handled-everyone-scoring-hash.trycloudflare.com',
+    'domain-searching-manual-routing.trycloudflare.com',
 ]
-
-
-
 
 CSRF_TRUSTED_ORIGINS = [
     "https://full-and-final.vercel.app",
     "https://*.onrender.com",
-    "https://handled-everyone-scoring-hash.trycloudflare.com",
-]
-                                            
+    "https://domain-searching-manual-routing.trycloudflare.com",
+]                                   
                 
                                             
 
